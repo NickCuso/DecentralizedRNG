@@ -41,6 +41,28 @@ See also DecentralizedRNGContract.js
     data: <textarea id=new_request_data></textarea>
     <button id=request_number disabled onclick="javascript:onClickRequestNumber()">Request Number</button>
 
+    <br><br>
+
+    <!-- About the app -->
+    <div id=about style="border-style:solid">
+        Decentralized RNG<br>
+        Verifable random numbers, powered by Nebulas.<br><br>
+        How-to:
+        <ul>
+            <li>Enter a max, to select a number between 0 and max-1 inclusive.</li>
+            <li>Enter associated data.</li>
+            <li>Request a number which makes a request on the blockchain.</li>
+            <li>You'll be redirected to a link where you can share the selected number.</li>
+        </ul>
+        
+        For example:<br>
+        I want to do a giveaway on Twitter.  Unless people watch me do the entire process live, they will suspect cheating. <br>
+        We need to know that the number was randomly selected and that the order of the list was not modified after the fact.<br>
+        By posting the 'data', you can use this service for any use case requiring a verifiable number - allowing people to manually confirm it was done fairly.<br>
+
+        <br>This is a free service, only pay a small transaction fee.
+    </div>
+
     <!-- All of these scripts are dependancies from the Nebulas Web Wallet -->
     <script src=lib/jquery-3.3.1.min.js></script>
     <script src=lib/nebulas.js></script>
@@ -53,11 +75,11 @@ See also DecentralizedRNGContract.js
         "use strict";
 
         // Global variables used by our Dapp
-        var contract_address = "n1oR2khGMsoBhKdNSxunByGiuuWcMEDVpbX";
+        var contract_address = "n1ot7S24E6eePBdrsQPMeWdf5WSCiGgWGpP";
         var user_account = null;
 
         // Gas hard coded for simplicity, ideally your app would allow for changing the gas price, etc.
-        var is_mainnet = false;
+        var is_mainnet = true;
         var nebulas_chain_id, nebulas_domain; 
         var gas_price = 1000000;
         var gas_limit = 200000;
