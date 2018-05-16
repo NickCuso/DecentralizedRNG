@@ -15,6 +15,7 @@
 #rng_request_number {
     font-size: 500%;
     font-weight: bolder;
+    height:40vh;
 }
 #rng_request_max {
     font-weight: bolder;
