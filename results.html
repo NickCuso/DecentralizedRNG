@@ -68,7 +68,7 @@
                 $("#rng_request_date").text(new Date(response.date));
                 $("#rng_request_max").text(response.max);
                 var $span = $("<span></span>").text(response.data);
-                $("#rng_request_data").append($span);
+                $("#rng_request_data").text($span);
             } else {
                 setTimeout(onClickRefresh, 3000); // Auto-refresh every few seconds                
             }
