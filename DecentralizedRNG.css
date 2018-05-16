@@ -26,4 +26,5 @@
     border: 1px solid white;
     margin: .75em;
     padding: .75em;
+    white-space: pre;
 }

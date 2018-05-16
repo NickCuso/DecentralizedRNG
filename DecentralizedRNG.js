@@ -4,7 +4,7 @@ $("#header").load('header.html');
 $("#footer").load('footer.html');    
 
 // Global variables used by our Dapp
-var contract_address = "n1e1yPaui6CiG9oqSGo4fxAdK1beDog7S88";
+var contract_address = "n1sJeUhCKE1r2hZnrbNAKtv5pTR2ydeWSsM";
 
 var NebPay = require("nebpay");
 var nebPay = new NebPay();
