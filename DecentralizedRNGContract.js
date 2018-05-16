@@ -6,7 +6,7 @@
 // Built for Nebulas by HardlyDifficult.  youtube.com/HardlyDifficult
 // License: https://github.com/hardlydifficult/DecentralizedRNG/blob/master/LICENSE
 //
-// See also index.html
+// See also https://github.com/hardlydifficult/DecentralizedRNG/
 
 var DecentralizedRNGContract = function() {
   // Data stored by the smart contract

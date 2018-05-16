@@ -1,119 +1,59 @@
-<!-- 
-DecentralizedRNG leverages the blockchain to select a random number.
-When you request a number, you can post any data with the request.  
-This way what you are selecting is verifiable as well.
-e.g. If I'm doing a giveaway, post a numbered list with the request so that the list can't be modified after a number was selected.
-
-Built for Nebulas by HardlyDifficult.  youtube.com/HardlyDifficult
-License: https://github.com/hardlydifficult/DecentralizedRNG/blob/master/LICENSE
-
-See also DecentralizedRNGContract.js
--->
-
 <!doctype html>
 <html>
 <head>
     <meta charset=utf-8>
     <title>DecentralizedRNG</title>
-    <script src=nebPay.js></script> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="darkly.css" media="screen">
+    <link rel="stylesheet" href="DecentralizedRNG.css">
+    <script src=nebPay.js></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- Displays a previous RNG request (if applicable) -->
-    <div id=rng_request>
-        <div>Selected Number: <span id=rng_request_number></span></div>
-        <div>Max: <span id=rng_request_max></span></div>
-        <div id=rng_request_data></div>
-        <div id=rng_request_date></div>
-        <br><br><hr><br><br><br>
-    </div>
-    <div id=rng_request_pending>
-        <button id=refresh onclick="javascript:onClickRefresh()">Refresh</button>
-        <br><br><hr><br><br><br>
-    </div>
+    <div id="header"></div>
 
-    <!-- The Dapp form -->
-    max: <input type=number id=new_request_max></input>
-    data: <textarea id=new_request_data></textarea>
-    <button id=request_number onclick="javascript:onClickRequestNumber()">Request Number</button>
-
-    <br><br>
-
-    <!-- About the app -->
-    <div id=about style="border-style:solid">
-        Decentralized RNG<br>
-        Verifable random numbers, powered by Nebulas.<br><br>
-        How-to:
-        <ul>
-            <li>Enter a max, to select a number between 0 and max-1 inclusive.</li>
-            <li>Enter associated data.</li>
-            <li>Request a number which makes a request on the blockchain.</li>
-            <li>You'll be redirected to a link where you can share the selected number.</li>
-        </ul>
-        
-        For example:<br>
-        I want to do a giveaway on Twitter.  Unless people watch me do the entire process live, they will suspect cheating. <br>
-        We need to know that the number was randomly selected and that the order of the list was not modified after the fact.<br>
-        By posting the 'data', you can use this service for any use case requiring a verifiable number - allowing people to manually confirm it was done fairly.<br>
-
-        <br>This is a free service, only pay a small transaction fee.
+    <div id="content">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Max Number:</span>
+            </div>
+            <input type=number id=new_request_max class="form-control"></input>
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Data:</span>
+            </div>
+            <textarea id=new_request_data class="form-control"></textarea> 
+        </div>
+        <div class="input-group">
+            <button id=request_number onclick="javascript:onClickRequestNumber()" class="btn btn-primary">Request Number</button>
+        </div>
     </div>
 
-    <script src=lib/jquery-3.3.1.min.js></script>
+    <div id="footer"></div> 
+
+    <script src=DecentralizedRNG.js></script>
     
-    <!-- Front end logic for our Dapp -->
     <script>
         "use strict";
-
-        // Global variables used by our Dapp
-        var contract_address = "n1mupuvuU5pqzvzn8N11yKjPbKYUww8DZuo";
-
-        var NebPay = require("nebpay");
-        var nebPay = new NebPay();
-        //to check if the extension is installed
-        //if the extension is installed, var "webExtensionWallet" will be injected in to web page
-        if(typeof(webExtensionWallet) === "undefined"){
-            alert ("Extension wallet is not installed, please install it first.")
-        }
-
-        // Called by the Refresh button
-        function onClickRefresh() {
-            nebPay.simulateCall(contract_address, 0, "getNumber", JSON.stringify([window.location.search.substr(1)]), {
-                listener: onGetNumber
-            });        
-        }
-
-        function onGetNumber(resp) {
-            var response = JSON.parse(resp.result);
-            if(response) {
-                $("#rng_request").show();
-                $("#rng_request_pending").hide();
-
-                $("#rng_request_number").text(response.number);
-                $("#rng_request_max").text(response.max);
-                $("#rng_request_data").text(response.data);
-                $("#rng_request_date").text(new Date(response.date));
-            }
-        }
-
-        // Called by the post button
+      
         function onClickRequestNumber() {
             var max = parseInt($("#new_request_max").val());
             var data = $("#new_request_data").val();
+            
             nebPay.call(contract_address, 0, "requestNumber", JSON.stringify([max, data]), {
                 listener: onRequestNumber
             });         
         }
 
         function onRequestNumber(resp) {
-            window.location = location.protocol + '//' + location.host + location.pathname + '?' + resp.txhash;            
-        }
+            if(typeof(resp)==='string' && resp.startsWith("Error")) {
+                throw new Error(resp);
+            }
 
-        $("#rng_request").hide();
-
-        if(window.location.search) {
-            onClickRefresh();
-        } else {
-            $("#rng_request_pending").hide();
+            window.location = location.protocol + '//' + location.host + '/results.html?' + resp.txhash;            
         }
     </script>
 </body>
