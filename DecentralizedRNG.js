@@ -12,5 +12,6 @@ var nebPay = new NebPay();
 //to check if the extension is installed
 //if the extension is installed, var "webExtensionWallet" will be injected in to web page
 if(typeof(webExtensionWallet) === "undefined"){
-    alert ("Extension wallet is not installed, please install it first.")
+    alert ("Extension wallet is not installed, you'll be redirected to the download instructions.");
+    window.location = "https://github.com/ChengOrangeJu/WebExtensionWallet";
 }
