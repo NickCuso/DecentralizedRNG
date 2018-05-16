@@ -39,6 +39,9 @@
     <script>
         "use strict";
       
+        var NebPay = require("nebpay");
+        var nebPay = new NebPay();
+        
         function onClickRequestNumber() {
             var max = parseInt($("#new_request_max").val());
             var data = $("#new_request_data").val();
