@@ -79,7 +79,7 @@
                 nonce: 0, // Nonce is irrelavant when read-only (there is no transaction charge)
                 gasPrice: gas_price,
                 gasLimit: gas_limit,
-                contract: {function: "getNumber", args: JSON.stringify([window.location.search.substr(1)])}
+                contract: {function: "getNumber", args: JSON.stringify([window.location.search.substr(8)])} //?txhash=
             }).then(function (resp) {
                 var response = JSON.parse(resp.result);
                 if(response) {

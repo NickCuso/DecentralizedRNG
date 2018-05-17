@@ -56,7 +56,7 @@
                 throw new Error(resp);
             }
 
-            window.location = location.protocol + '//' + location.host + location.pathname + 'results.html?' + resp.txhash;            
+            window.location = location.protocol + '//' + location.host + location.pathname + 'results.html?txhash=' + resp.txhash;            
         }
         
         //to check if the extension is installed
