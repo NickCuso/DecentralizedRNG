@@ -48,7 +48,7 @@
     <script>
         "use strict";   
 
-        $("#viewTx").attr('href', "https://explorer.nebulas.io/#/tx/" + window.location.search.substr(1));
+        $("#viewTx").attr('href', "https://explorer.nebulas.io/#/tx/" + window.location.search.substr(8));
         $("#rng_request").hide();
 
         // Gas hard coded for simplicity, ideally your app would allow for changing the gas price, etc.
